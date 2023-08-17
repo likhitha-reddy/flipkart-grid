@@ -1,4 +1,5 @@
 import User from '../model/userSchema.js';
+import generateToken from './generateToken.js';
 
 export const userLogIn = async (request, response) => {
     try {
@@ -6,13 +7,16 @@ export const userLogIn = async (request, response) => {
         console.log(user);
         console.log(request.body);
         if(user) {
-            return response.send({username:user.username});
+            const t= generateToken(user?._id)
+            console.log(t);
+            return response.status(200).json({username:user.username,token: t});
         } else {
             return response.status(401).json('Invalid Login');
         }
 
     } catch (error) {
-        response.json('Error: ', error.message);        
+        console.log(error.message)
+        response.json(error.message);        
     }
 }
 
@@ -28,7 +32,7 @@ export const userSignUp = async (request, response) => {
         response.status(200).json(`${user.firstName} has been successfully registered`);
         
     } catch (error) {
-        response.json('Error: ', error.message);
+        response.json( error.message);
     }
 }
 

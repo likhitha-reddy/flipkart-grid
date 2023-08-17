@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import autoIncrement from 'mongoose-auto-increment';
+
 
 const productSchema = new mongoose.Schema({
     id: String,
@@ -7,15 +7,27 @@ const productSchema = new mongoose.Schema({
     detailUrl: String,
     title: Object,
     price: Object,
-    quantity: Number,
     description: String,
     discount: String,
-    tagline: String
+    tagline:String,
+    numViews: {
+        type: Number,
+        default: 0,
+      },
+    likedusers:[
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+      ],
+    viewedusers:[
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "user",
+        },
+      ],
 });
 
-autoIncrement.initialize(mongoose.connection);
-productSchema.plugin(autoIncrement.plugin, 'product');
-
-const products = mongoose.model('product', productSchema);
+const products = mongoose.model('products3', productSchema);
 
 export default products;

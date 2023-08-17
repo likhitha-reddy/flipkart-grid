@@ -32,33 +32,21 @@ const Home = () => {
         <> 
             <NavBar />
             <Box className={classes.component}>
-                <Banner />
-                <MidSlide products={products} />
-                <MidSection />
-                <Slide
-                    data={products} 
-                    title='Discounts for You'
-                    timer={false} 
-                    multi={true} 
-                />
-                <Slide
-                    data={products} 
-                    title='Suggested Items'
-                    timer={false} 
-                    multi={true} 
-                />
-                <Slide
-                    data={products} 
-                    title='Top Selection'
-                    timer={false} 
-                    multi={true} 
-                />
+               
+               
                 <Slide
                     data={products} 
                     title='Recommended Items'
                     timer={false} 
                     multi={true} 
                 />
+                 <Slide
+                    data={products} 
+                    title='Discounts for You'
+                    timer={false} 
+                    multi={true} 
+                />
+               
             </Box>
         </>
     )

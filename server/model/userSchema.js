@@ -36,7 +36,22 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String
-    }
+    },
+    likedposts:[
+        {
+            type: String,
+        },
+      ],
+      purchasedposts:[
+        {
+            type: String,
+        },
+      ],
+    viewedposts:[
+        {
+          type: String,
+        },
+      ],
 });
 
 const user = mongoose.model('user', userSchema);

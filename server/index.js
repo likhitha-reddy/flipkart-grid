@@ -19,7 +19,20 @@ dotenv.config();
 const app = express();
 
 const PORT = 8000;
+app.use(cors());
+{/*
+const corsOptions = { origin: ["https://git.heroku.com/mern-blog-api-v9.git"], credentials: true }
 
+app.use(cors(corsOptions));
+
+*/}
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 const username = process.env.DB_USERNAME;
 const password = process.env.DB_PASSWORD;
 

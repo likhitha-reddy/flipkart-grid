@@ -1,13 +1,12 @@
 import { useState, useContext, useReducer, useEffect } from 'react';
 import { Button, Box, makeStyles } from '@material-ui/core';
-import { ShoppingCart as Cart, FlashOn as Flash } from '@material-ui/icons';
+import {  FlashOn as Flash } from '@material-ui/icons';
 import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
 import { LoginContext } from '../../context/ContextProvider';
 // import { initialState, reducer } from '../../reducers/reducer';
-import { addToCart } from '../../redux/actions/cartActions';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadRazorpay } from '../../razorpay/loadPayment';
+import axios from 'axios';
 
 
 const useStyle = makeStyles(theme => ({
@@ -49,18 +48,30 @@ const ActionItem = ({ product }) => {
     const dispatch = useDispatch();
 
     const buyNow = async () => {
-       loadRazorpay(600);
+        try {
+            const userAuth=JSON.parse(localStorage.getItem('userInfo'))
+            console.log(userAuth.token,"ua");
+            
+            const config = {
+                headers: {
+                  Authorization: `Bearer ${userAuth.token}`,
+                },
+              };
+            const { data } = await axios.get(`http://localhost:8000/purchaseproduct/${id}`,config);
+            alert("product bought successsfully");
+    
+    
+        } catch (error) {
+            console.log(error);
+    
+        }
+       
     }
 
-    const addItemToCart = () => {
-        dispatch(addToCart(id, quantity));
-        history.push('/cart');
-    }
 
     return (
         <Box className={classes.leftContainer}>
             <img src={product.detailUrl} className={classes.productImage} alt="" /><br />
-            <Button onClick={() => addItemToCart()} className={clsx(classes.button, classes.addToCart)} style={{marginRight: 10}} variant="contained"><Cart />Add to Cart</Button>
             <Button onClick={() => buyNow()} className={clsx(classes.button, classes.buyNow)} variant="contained"><Flash /> Buy Now</Button>
         </Box>
     )

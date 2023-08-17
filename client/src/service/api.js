@@ -20,7 +20,15 @@ export const authenticateSignup = async (user) => {
 
 export const getProductById = async (id) => {
     try {
-        return await axios.get(`${url}/product/${id}`);
+        const userAuth=JSON.parse(localStorage.getItem('userInfo'))
+        console.log(userAuth.token,"ua");
+        
+        const config = {
+            headers: {
+              Authorization: `Bearer ${userAuth.token}`,
+            },
+          };
+        return await axios.get(`${url}/product/${id}`,config);
     } catch (error) {
         console.log('Error while getting product by id response', error);
     }

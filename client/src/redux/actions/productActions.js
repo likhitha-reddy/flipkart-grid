@@ -14,11 +14,17 @@ export const getProducts = () => async (dispatch) => {
 
 export const getProductDetails = (id) => async (dispatch) => {
     try {
-        dispatch({ type: actionTypes.GET_PRODUCT_DETAILS_REQUEST });
-        const { data } = await axios.get(`http://localhost:8000/product/${id}`);
-        console.log(data);
+        const userAuth=JSON.parse(localStorage.getItem('userInfo'))
+        console.log(userAuth.token,"ua");
+        
+        const config = {
+            headers: {
+              Authorization: `Bearer ${userAuth.token}`,
+            },
+          };
+        const { data } = await axios.get(`http://localhost:8000/product/${id}`,config);
+        console.log(data.data[0]);
 
-        dispatch({ type: actionTypes.GET_PRODUCT_DETAILS_SUCCESS, payload: data });
 
     } catch (error) {
         dispatch({ type: actionTypes.GET_PRODUCT_DETAILS_FAIL, payload: error.response});
